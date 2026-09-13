@@ -1,6 +1,6 @@
 import { site, projects } from '~/utils/content'
 import { displayName, listNode, resolve, root } from './fs'
-import { TAILS_ASCII } from './ascii'
+import { WORDMARK_FULL } from './ascii'
 import type { Block, Command, Ctx, Tone } from './types'
 
 const err = (text: string): Block => ({ kind: 'error', text })
@@ -180,11 +180,11 @@ const github: Command = {
 const neofetch: Command = {
   name: 'neofetch',
   usage: 'neofetch',
-  description: 'system info, tails included',
+  description: 'system info',
   async run(_, ctx) {
     const gh = await ctx.github()
     return [
-      { kind: 'ascii', text: TAILS_ASCII },
+      { kind: 'ascii', text: WORDMARK_FULL },
       {
         kind: 'rows',
         cols: 2,
@@ -258,7 +258,7 @@ const rm: Command = {
   description: '',
   hidden: true,
   run(args) {
-    if (args.includes('-rf') && (args.includes('/') || args.includes('~'))) return [err('rm: nice try. the tails stay.')]
+    if (args.includes('-rf') && (args.includes('/') || args.includes('~'))) return [err('rm: nice try. the site stays.')]
     return [err('rm: read-only file system')]
   }
 }

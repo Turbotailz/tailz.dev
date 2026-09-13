@@ -27,7 +27,6 @@ onUnmounted(() => {
       <span class="dot cyan" />
     </div>
     <div class="chrome-title">
-      <TailsMark class="tails sm" aria-hidden="true" style="vertical-align: -0.2em; margin-right: 0.4rem" />
       <span class="host">{{ site.prompt }}</span>: {{ shell.cwd.value }}
     </div>
     <div class="chrome-right">

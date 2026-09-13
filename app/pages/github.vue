@@ -41,7 +41,6 @@ useSeoMeta({
             width="96"
             height="96"
           >
-          <TailsMark class="tails" style="width: 3rem" />
         </div>
         <dl class="kv">
           <dt>user</dt>

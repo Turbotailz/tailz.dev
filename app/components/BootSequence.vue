@@ -32,7 +32,6 @@ function onLineDone() {
 <template>
   <div class="boot" role="dialog" aria-label="boot">
     <div class="boot-inner">
-      <TailsMark class="tails" style="width: 3rem; margin-bottom: 0.5rem" />
       <p v-for="(text, i) in lines.slice(0, Math.min(line + 1, lines.length))" :key="text" class="boot-line">
         <span class="ps">›&nbsp;</span>
         <template v-if="i < line">

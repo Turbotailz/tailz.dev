@@ -12,19 +12,25 @@ const histIdx = ref(-1)
 const histDraft = ref('')
 const busy = ref(false)
 
+const [user, host] = site.prompt.split('@')
+
 const completions = computed(() => complete(input.value, shell.cwd.value))
 const open = computed(() => focused.value && input.value.length > 0 && completions.value.length > 0)
 
 watch(input, () => { active.value = -1 })
 
-watch(() => shell.focusTick.value, () => inputEl.value?.focus())
+watch(() => shell.focusTick.value, () => focusInput())
+
+function focusInput() {
+  nextTick(() => inputEl.value?.focus())
+}
 
 function accept(index = active.value >= 0 ? active.value : 0) {
   const c = completions.value[index]
   if (!c) return
   input.value = c.value
   active.value = -1
-  nextTick(() => inputEl.value?.focus())
+  focusInput()
 }
 
 async function submit() {
@@ -32,13 +38,18 @@ async function submit() {
   input.value = ''
   active.value = -1
   histIdx.value = -1
-  if (!value.trim()) return
+  if (!value.trim()) {
+    focusInput()
+    return
+  }
   busy.value = true
   await shell.run(value)
   busy.value = false
+  focusInput()
 }
 
 function onKeydown(e: KeyboardEvent) {
+  focused.value = true
   const list = completions.value
   if (e.key === 'Tab') {
     e.preventDefault()
@@ -86,8 +97,9 @@ function onKeydown(e: KeyboardEvent) {
     return
   }
   if (e.key === 'Escape') {
+    e.preventDefault()
     active.value = -1
-    inputEl.value?.blur()
+    // Stay focused — Escape only dismisses completions.
     return
   }
   if (e.ctrlKey && (e.key === 'l' || e.key === 'L')) {
@@ -108,17 +120,43 @@ function onKeydown(e: KeyboardEvent) {
   }
 }
 
+function onBlur(e: FocusEvent) {
+  focused.value = false
+  const next = e.relatedTarget as HTMLElement | null
+  // Keep the prompt focused unless the user is moving into another focusable control
+  // (links, buttons, or the completion list which uses mousedown.prevent).
+  if (!next || next === inputEl.value) {
+    focusInput()
+    return
+  }
+  const tag = next.tagName
+  if (tag === 'A' || tag === 'BUTTON' || next.isContentEditable) return
+  focusInput()
+}
+
 function onGlobalKey(e: KeyboardEvent) {
   if (e.defaultPrevented || e.metaKey || e.ctrlKey || e.altKey) return
   const t = e.target as HTMLElement | null
   const typing = t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable)
-  if (e.key === '/' && !typing) {
-    e.preventDefault()
-    inputEl.value?.focus()
+  if (typing) return
+  // Printable keys / slash / backspace → steal focus back into the prompt.
+  if (e.key === '/' || e.key === 'Backspace' || e.key.length === 1) {
+    if (e.key === '/') e.preventDefault()
+    focusInput()
   }
 }
 
-onMounted(() => window.addEventListener('keydown', onGlobalKey))
+onMounted(() => {
+  const tryFocus = () => {
+    if (document.querySelector('.boot')) {
+      requestAnimationFrame(tryFocus)
+      return
+    }
+    focusInput()
+  }
+  tryFocus()
+  window.addEventListener('keydown', onGlobalKey)
+})
 onUnmounted(() => window.removeEventListener('keydown', onGlobalKey))
 </script>
 
@@ -146,32 +184,42 @@ onUnmounted(() => window.removeEventListener('keydown', onGlobalKey))
     </ul>
     <form class="promptline" @submit.prevent="submit">
       <label class="ps1" for="shell-input">
-        <span class="u">{{ site.prompt.split('@')[0] }}</span><span class="at">@</span><span class="h">{{ site.prompt.split('@')[1] }}</span><span class="s">:</span><span class="d">{{ shell.cwd.value }}</span><span class="s">$</span>
+        <span class="u">{{ user }}</span><span class="at">@</span><span class="h">{{ host }}</span><span class="s">:</span><span class="d">{{ shell.cwd.value }}</span><span class="s">$</span>
       </label>
-      <input
-        id="shell-input"
-        ref="inputEl"
-        v-model="input"
-        type="text"
-        role="combobox"
-        autocomplete="off"
-        autocapitalize="off"
-        autocorrect="off"
-        spellcheck="false"
-        enterkeyhint="go"
-        placeholder="help"
-        aria-label="shell command"
-        aria-autocomplete="list"
-        :aria-expanded="open"
-        aria-controls="shell-completions"
-        :aria-activedescendant="active >= 0 ? `shell-opt-${active}` : undefined"
-        :disabled="busy"
-        @keydown="focused = true; onKeydown($event)"
-        @input="focused = true"
-        @focus="focused = true"
-        @blur="focused = false"
-      >
-      <span class="prompt-hint" aria-hidden="true">/ to focus · tab to complete</span>
+      <div class="prompt-field" :class="{ focused }" @click="focusInput">
+        <span class="prompt-mirror" aria-hidden="true">{{ input }}</span>
+        <span v-show="focused" class="cursor prompt-cursor" aria-hidden="true" />
+        <input
+          id="shell-input"
+          ref="inputEl"
+          v-model="input"
+          type="text"
+          role="combobox"
+          autocomplete="off"
+          autocapitalize="off"
+          autocorrect="off"
+          spellcheck="false"
+          enterkeyhint="go"
+          placeholder=""
+          aria-label="shell command"
+          aria-autocomplete="list"
+          :aria-expanded="open"
+          aria-controls="shell-completions"
+          :aria-activedescendant="active >= 0 ? `shell-opt-${active}` : undefined"
+          :disabled="busy"
+          @keydown="onKeydown"
+          @input="focused = true"
+          @focus="focused = true"
+          @blur="onBlur"
+        >
+      </div>
     </form>
+    <footer class="site-foot">
+      <span>tailz.dev</span>
+      <span aria-hidden="true">·</span>
+      <span>Made with &lt;3 by Turbotailz</span>
+      <span aria-hidden="true">·</span>
+      <a :href="site.github" rel="noopener noreferrer">{{ site.github.replace('https://', '') }}</a>
+    </footer>
   </div>
 </template>

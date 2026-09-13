@@ -6,6 +6,7 @@ const pane = ref<HTMLElement | null>(null)
 watch(() => route.path, async () => {
   await nextTick()
   pane.value?.scrollTo({ top: 0, behavior: 'instant' })
+  shell.focus()
 })
 </script>
 
@@ -17,10 +18,6 @@ watch(() => route.path, async () => {
       <div class="pane-inner">
         <slot />
         <ShellLog />
-        <p class="muted" style="margin-top: 2rem; font-size: 0.8em">
-          tailz.dev · OSS home · not a studio ·
-          <a :href="shell.site.github" rel="noopener noreferrer">{{ shell.site.github.replace('https://', '') }}</a>
-        </p>
       </div>
     </main>
     <ShellPrompt />

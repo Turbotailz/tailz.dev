@@ -285,8 +285,8 @@ pre,
   position: relative;
   border-top: 1px solid var(--line);
   background: rgba(23, 16, 42, 0.85);
-  padding: 0.7rem var(--pad);
-  padding-bottom: max(0.7rem, env(safe-area-inset-bottom));
+  padding: 0.7rem var(--pad) 0.55rem;
+  padding-bottom: max(0.55rem, env(safe-area-inset-bottom));
   backdrop-filter: blur(6px);
 }
 
@@ -309,27 +309,76 @@ pre,
 .ps1 .d { color: var(--mag); }
 .ps1 .s { color: var(--dim); }
 
-.promptline input {
+.prompt-field {
+  position: relative;
   flex: 1 1 auto;
   min-width: 0;
+  display: flex;
+  align-items: center;
+  font: inherit;
+  line-height: 1.4;
+  min-height: 1.4em;
+  cursor: text;
+}
+
+.prompt-mirror {
+  white-space: pre;
+  visibility: hidden;
+  pointer-events: none;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.prompt-cursor {
+  flex: 0 0 auto;
+  margin-left: 1px;
+  position: relative;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.prompt-field:not(.focused) .prompt-cursor {
+  display: none;
+}
+
+.prompt-field input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   background: transparent;
   border: 0;
   outline: 0;
   color: var(--fg);
   font: inherit;
-  caret-color: var(--cyan);
-  padding: 0.15rem 0;
+  line-height: inherit;
+  caret-color: transparent;
+  padding: 0;
+  z-index: 1;
 }
 
-.promptline input::placeholder {
-  color: var(--dim-2);
+.prompt-field input::placeholder {
+  color: transparent;
 }
 
-.prompt-hint {
-  flex: 0 0 auto;
+.site-foot {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.55rem;
+  max-width: 96rem;
+  margin: 0.55rem auto 0;
+  padding-top: 0.45rem;
+  border-top: 1px solid var(--line);
   color: var(--dim-2);
   font-size: 0.75em;
-  white-space: nowrap;
+}
+
+.site-foot a {
+  color: var(--dim);
+}
+
+.site-foot a:hover {
+  color: var(--mag);
 }
 
 .complete {
@@ -375,13 +424,8 @@ pre,
 }
 
 @media (max-width: 600px) {
-  .prompt-hint {
-    display: none;
-  }
-
-  .ps1 .h,
-  .ps1 .at {
-    display: none;
+  .ps1 {
+    font-size: 0.85em;
   }
 
   .complete li {
@@ -786,15 +830,8 @@ pre,
 
 .hero-row {
   display: grid;
-  gap: 1rem 1.5rem;
-  align-items: center;
+  gap: 1rem;
   width: 100%;
-}
-
-@container (min-width: 700px) {
-  .hero-row {
-    grid-template-columns: auto 1fr;
-  }
 }
 
 .wordmark {
@@ -841,17 +878,6 @@ pre,
 @container (max-width: 520px) {
   .wordmark .full { display: none; }
   .wordmark .stacked { display: block; }
-}
-
-.tails {
-  width: clamp(3.5rem, 12cqw, 7rem);
-  height: auto;
-  filter: drop-shadow(0 0 16px rgba(255, 43, 214, 0.45));
-}
-
-.tails.sm {
-  width: 1.1rem;
-  filter: none;
 }
 
 .tagline {

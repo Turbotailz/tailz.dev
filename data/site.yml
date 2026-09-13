@@ -1,5 +1,5 @@
 handle: Turbotailz
-prompt: "turbo@tailz"
+prompt: "turbo@tailz.dev"
 tagline: OSS · websites & interfaces · Sydney
 offer: I enjoy creating nice websites and interfaces for open source projects. Let’s chat.
 email: turbo@tailz.dev
@@ -29,7 +29,6 @@ useChips:
   - Home Assistant
 boot:
   - "tailz.dev bios v2 — synthwave build"
-  - "detecting tails ............ 2 found"
-  - "loading identity ........... turbo@tailz"
+  - "loading identity ........... turbo@tailz.dev"
   - "mounting ~/projects ~/uses ~/github ~/whoami"
   - "starting tailz-sh .......... type help"

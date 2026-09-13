@@ -20,6 +20,7 @@ onMounted(() => {
 function booted() {
   booting.value = false
   try { sessionStorage.setItem('tailz:booted', '1') } catch { /* ignore */ }
+  shell.focus()
 }
 
 function tryCommand(cmd: string) {
@@ -41,7 +42,6 @@ useSeoMeta({
     <section class="hero">
       <div class="hero-grid" aria-hidden="true" />
       <div class="hero-row">
-        <TailsMark class="tails" />
         <AsciiWordmark />
       </div>
       <p class="tagline">
