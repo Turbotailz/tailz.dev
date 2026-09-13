@@ -9,8 +9,9 @@ export default defineNuxtConfig({
       title: 'tailz.dev',
       titleTemplate: '%s · tailz.dev',
       meta: [
-        { name: 'theme-color', content: '#0b120c' },
+        { name: 'theme-color', content: '#08050f' },
         { name: 'color-scheme', content: 'dark' },
+        { name: 'viewport', content: 'width=device-width, initial-scale=1, viewport-fit=cover' },
         { name: 'description', content: 'Turbotailz — open source websites and interfaces. LuckPerms, Syscraft, and more.' }
       ],
       link: [
@@ -19,7 +20,7 @@ export default defineNuxtConfig({
         { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
         {
           rel: 'stylesheet',
-          href: 'https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap'
+          href: 'https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;800&display=swap'
         }
       ]
     }

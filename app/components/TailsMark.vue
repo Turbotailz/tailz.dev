@@ -1,0 +1,38 @@
+<script setup lang="ts">
+const id = useId()
+const body = `url(#${id}-l)`
+const tip = `url(#${id}-t)`
+const r = `#${id}-r`
+const q = `#${id}-q`
+</script>
+
+<template>
+  <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="two fox tails">
+    <defs>
+      <linearGradient :id="`${id}-l`" x1="0" y1="1" x2="0" y2="0">
+        <stop offset="0" stop-color="#8a1fff" />
+        <stop offset="0.7" stop-color="#ff2bd6" />
+        <stop offset="1" stop-color="#ff6ee6" />
+      </linearGradient>
+      <linearGradient :id="`${id}-t`" x1="0" y1="1" x2="0" y2="0">
+        <stop offset="0" stop-color="#22e8ff" />
+        <stop offset="1" stop-color="#ffffff" />
+      </linearGradient>
+      <path :id="`${id}-r`" d="M29 61 C48 56 62 40 52 26 C45 16 34 14 44 5" pathLength="100" />
+      <path :id="`${id}-q`" d="M35 61 C16 56 2 40 12 26 C19 16 30 14 20 5" pathLength="100" />
+    </defs>
+    <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <use :href="r" :stroke="body" stroke-width="8" stroke-dasharray="90 100" />
+      <use :href="r" :stroke="body" stroke-width="12" stroke-dasharray="64 100" stroke-dashoffset="-12" />
+      <use :href="r" :stroke="body" stroke-width="15" stroke-dasharray="34 100" stroke-dashoffset="-28" />
+      <use :href="r" :stroke="tip" stroke-width="8" stroke-dasharray="16 100" stroke-dashoffset="-84" />
+    </g>
+    <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <use :href="q" stroke="#08050f" stroke-width="12" stroke-dasharray="30 100" />
+      <use :href="q" :stroke="body" stroke-width="8" stroke-dasharray="90 100" />
+      <use :href="q" :stroke="body" stroke-width="12" stroke-dasharray="64 100" stroke-dashoffset="-12" />
+      <use :href="q" :stroke="body" stroke-width="15" stroke-dasharray="34 100" stroke-dashoffset="-28" />
+      <use :href="q" :stroke="tip" stroke-width="8" stroke-dasharray="16 100" stroke-dashoffset="-84" />
+    </g>
+  </svg>
+</template>

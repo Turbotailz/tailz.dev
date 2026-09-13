@@ -9,21 +9,27 @@ useSeoMeta({
 
 <template>
   <div>
-    <p class="muted">$ ls -l projects</p>
-    <section class="box">
-      <h2>projects</h2>
-      <div class="stack">
+    <p class="cmdline"><span class="ps">$</span> <span class="c">ls -la ~/projects</span></p>
+    <p class="muted">{{ projects.length }} entries · rebuilds for communities, tools I author.</p>
+
+    <Panel title="projects/">
+      <div class="cards">
         <NuxtLink
           v-for="p in projects"
           :key="p.slug"
           :to="`/projects/${p.slug}`"
-          class="row ls"
+          class="card"
         >
-          <span class="amber">{{ p.slug }}/</span>
-          <span class="muted">{{ p.role }}</span>
-          <span>{{ p.oneLiner }}</span>
+          <div class="card-head">
+            <span class="card-slug">{{ p.slug }}</span>
+            <span class="badge" :class="{ mag: p.role === 'author' }">{{ p.role }}</span>
+          </div>
+          <p>{{ p.oneLiner }}</p>
+          <p class="sub">
+            {{ p.name }}<template v-if="p.community"> · {{ p.community }}</template>
+          </p>
         </NuxtLink>
       </div>
-    </section>
+    </Panel>
   </div>
 </template>

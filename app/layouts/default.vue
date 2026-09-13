@@ -1,44 +1,28 @@
 <script setup lang="ts">
-const site = useSite()
+const shell = useShell()
 const route = useRoute()
+const pane = ref<HTMLElement | null>(null)
 
-const cwd = computed(() => {
-  if (route.path === '/') return '~'
-  return `~${route.path.replace(/\/$/, '')}`
+watch(() => route.path, async () => {
+  await nextTick()
+  pane.value?.scrollTo({ top: 0, behavior: 'instant' })
 })
-
-const links = [
-  { to: '/', label: 'cd ~', exact: true },
-  { to: '/projects', label: 'ls projects' },
-  { to: '/uses', label: 'cat uses' },
-  { to: '/github', label: 'cd github' },
-  { to: '/whoami', label: 'cat whoami' }
-]
 </script>
 
 <template>
-  <div class="wrap">
-    <header class="bar">
-      <div class="prompt">
-        <strong>{{ site.prompt }}</strong>
-        <span class="muted"> {{ cwd }}</span>
+  <div class="term">
+    <TerminalChrome />
+    <SiteNav />
+    <main id="pane" ref="pane" class="pane">
+      <div class="pane-inner">
+        <slot />
+        <ShellLog />
+        <p class="muted" style="margin-top: 2rem; font-size: 0.8em">
+          tailz.dev · OSS home · not a studio ·
+          <a :href="shell.site.github" rel="noopener noreferrer">{{ shell.site.github.replace('https://', '') }}</a>
+        </p>
       </div>
-      <nav class="nav" aria-label="site">
-        <NuxtLink
-          v-for="link in links"
-          :key="link.to"
-          :to="link.to"
-          :class="{ 'router-link-active': link.to === '/' ? route.path === '/' : route.path.startsWith(link.to) }"
-          :aria-current="(link.to === '/' ? route.path === '/' : route.path.startsWith(link.to)) ? 'page' : undefined"
-        >
-          {{ link.label }}
-        </NuxtLink>
-      </nav>
-    </header>
-    <slot />
-    <footer class="footer">
-      <span>tailz.dev · OSS home · not a studio</span>
-      <a :href="site.github" rel="noopener noreferrer">{{ site.github.replace('https://', '') }}</a>
-    </footer>
+    </main>
+    <ShellPrompt />
   </div>
 </template>

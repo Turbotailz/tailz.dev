@@ -9,33 +9,32 @@ useSeoMeta({
 
 <template>
   <div>
-    <p class="muted">$ cat whoami</p>
-    <section class="box">
-      <h2>whoami</h2>
-      <p>{{ site.whoami }}</p>
-      <p>{{ site.offer }}</p>
-      <p class="muted">
-        <a :href="site.github" rel="noopener noreferrer">GitHub/{{ site.handle }}</a>
-        · Discord @{{ site.discordHandle }}
-        · <a :href="`mailto:${site.email}`">{{ site.email }}</a>
-      </p>
-    </section>
-    <section class="box">
-      <h2>other homes</h2>
-      <p class="muted">this site is OSS only.</p>
-      <div class="stack">
+    <p class="cmdline"><span class="ps">$</span> <span class="c">cat ~/whoami</span></p>
+
+    <Panel title="whoami">
+      <p style="font-size: 1.05em">{{ site.whoami }}</p>
+      <p class="mag glow-mag" style="font-size: 1.05em">{{ site.offer }}</p>
+      <div class="links">
+        <a :href="site.github" rel="noopener noreferrer">github/{{ site.handle }}</a>
+        <span>discord @{{ site.discordHandle }}</span>
+        <a :href="`mailto:${site.email}`">{{ site.email }}</a>
+      </div>
+    </Panel>
+
+    <Panel title="ls ~/homes">
+      <p class="muted">this site is OSS only. the rest of me lives elsewhere.</p>
+      <div class="ls">
         <a
           v-for="home in site.homes"
           :key="home.href"
           :href="home.href"
           rel="noopener noreferrer"
-          class="row ls"
+          class="ls-row two"
         >
-          <span class="amber">{{ home.label }}</span>
-          <span class="muted">{{ home.note }}</span>
-          <span />
+          <span class="n">{{ home.label }}@</span>
+          <span class="m">{{ home.note }}</span>
         </a>
       </div>
-    </section>
+    </Panel>
   </div>
 </template>

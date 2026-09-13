@@ -128,7 +128,7 @@ export async function fetchGithubTelemetry(token?: string): Promise<GithubTeleme
               }
             }
           }
-          search(query: "author:${LOGIN} org:LuckPerms is:pr", type: ISSUE, first: 5) {
+          search(query: "author:${LOGIN} org:LuckPerms is:pr sort:created-desc", type: ISSUE, first: 6) {
             nodes { ... on PullRequest { title url createdAt } }
           }
         }
@@ -165,14 +165,39 @@ export async function fetchGithubTelemetry(token?: string): Promise<GithubTeleme
         headers: headers(token),
         query: { per_page: 20 }
       })
-      const activity = events
-        .filter(e => e.repo?.name?.toLowerCase().includes('luckperms') || e.type === 'PullRequestEvent')
-        .slice(0, 6)
-        .map(e => ({
-          date: e.created_at.slice(0, 10),
-          title: e.payload?.pull_request?.title || `${e.type} ${e.repo.name}`,
-          url: e.payload?.pull_request?.html_url || `https://github.com/${e.repo.name}`
-        }))
+      const verbs: Record<string, string> = {
+        PushEvent: 'push',
+        PullRequestEvent: 'pull request',
+        IssuesEvent: 'issue',
+        IssueCommentEvent: 'comment',
+        CreateEvent: 'create',
+        ReleaseEvent: 'release',
+        WatchEvent: 'star',
+        ForkEvent: 'fork'
+      }
+      const seen = new Map<string, { date: string, title: string, url: string, n: number }>()
+      for (const e of events) {
+        if (e.type === 'WatchEvent' || e.type === 'ForkEvent') continue
+        const date = e.created_at.slice(0, 10)
+        const pr = e.payload?.pull_request
+        const key = pr ? pr.html_url || `${date}:${e.type}:${e.repo.name}` : `${date}:${e.type}:${e.repo.name}`
+        const existing = seen.get(key)
+        if (existing) {
+          existing.n += 1
+          continue
+        }
+        seen.set(key, {
+          date,
+          title: pr?.title ? `${verbs[e.type] || e.type} · ${pr.title}` : `${verbs[e.type] || e.type} → ${e.repo.name}`,
+          url: pr?.html_url || `https://github.com/${e.repo.name}`,
+          n: 1
+        })
+      }
+      const activity = [...seen.values()].slice(0, 6).map(a => ({
+        date: a.date,
+        title: a.n > 1 ? `${a.title} ×${a.n}` : a.title,
+        url: a.url
+      }))
       return { ...base, activity }
     } catch {
       return base

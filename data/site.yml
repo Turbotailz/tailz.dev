@@ -1,8 +1,8 @@
 handle: Turbotailz
-prompt: "turbotailz@tailz:~$"
+prompt: "turbo@tailz"
 tagline: OSS · websites & interfaces · Sydney
 offer: I enjoy creating nice websites and interfaces for open source projects. Let’s chat.
-email: sam@goodger.au
+email: turbo@tailz.dev
 github: https://github.com/Turbotailz
 discordHandle: Turbotailz
 whoami: Turbotailz is Sam Goodger — a developer in Sydney who rebuilds and designs websites for open source communities.
@@ -28,7 +28,8 @@ useChips:
   - n8n
   - Home Assistant
 boot:
-  - booting tailz.dev …
-  - loading identity: Turbotailz
-  - mounting /projects /uses /github
-  - ready.
+  - "tailz.dev bios v2 — synthwave build"
+  - "detecting tails ............ 2 found"
+  - "loading identity ........... turbo@tailz"
+  - "mounting ~/projects ~/uses ~/github ~/whoami"
+  - "starting tailz-sh .......... type help"
