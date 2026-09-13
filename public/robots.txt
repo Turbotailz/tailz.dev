@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://tailz.dev/sitemap.xml

@@ -1,0 +1,45 @@
+- group: Web
+  items:
+    - name: Nuxt
+      href: https://nuxt.com
+      note: LuckPerms Web v3, Syscraft wiki, and most of my own sites on Nuxt 4.
+    - name: Nuxt UI
+      href: https://ui.nuxt.com
+      note: Component layer on those OSS rebuilds — not on this console.
+    - name: Nuxt Content
+      href: https://content.nuxt.com
+      note: Wiki and guide sites without a CMS.
+    - name: Vue
+      href: https://vuejs.org
+      note: How I have shipped UI for about a decade.
+- group: Edge
+  items:
+    - name: Cloudflare Pages
+      href: https://pages.cloudflare.com
+      note: This site, Syscraft preview, Morpheus, Athena.
+    - name: Workers
+      href: https://workers.cloudflare.com
+      note: APIs, forms, and small edge jobs around those apps.
+    - name: Tunnels
+      href: https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/
+      note: Homelab services on *.tailz.dev without opening the LAN.
+- group: Automation
+  items:
+    - name: n8n
+      href: https://n8n.io
+      note: Homelab workflows — briefs, website audit. Infra, not a product page.
+- group: Home
+  items:
+    - name: Home Assistant
+      href: https://www.home-assistant.io
+      note: Campsie is live; Duns Law is still planning. User, not vendor.
+- group: Notes
+  items:
+    - name: Obsidian
+      href: https://obsidian.md
+      note: Vault + LiveSync on CouchDB. Where the work is organised.
+- group: Runtime
+  items:
+    - name: Docker
+      href: https://www.docker.com
+      note: Homelab containers behind the tunnel.

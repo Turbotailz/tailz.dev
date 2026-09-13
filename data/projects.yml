@@ -1,0 +1,53 @@
+- slug: luckperms
+  name: LuckPerms Web v3
+  role: rebuild
+  featured: true
+  oneLiner: Rebuilding the LuckPerms website, wiki, and permissions editor on Nuxt 4.
+  github: https://github.com/Turbotailz/LuckPermsWeb
+  upstream: https://github.com/LuckPerms/LuckPermsWeb
+  live: https://luckperms.net
+  community: LuckPerms Discord
+  communityUrl: https://discord.gg/luckperms
+  bullets:
+    - Nuxt 4 + Nuxt UI rebuild of luckperms.net (home, download, sponsor, wiki).
+    - Working with Luck toward a v3 editor on the existing install base.
+    - About ten years around the project, back on the web stack for the Hytale era.
+
+- slug: syscraft
+  name: Syscraft wiki
+  role: rebuild
+  featured: true
+  oneLiner: Porting the Syscraft Minecraft admin wiki from Astro 2 to Nuxt 4.
+  github: https://github.com/Turbotailz/syscraft.dev
+  upstream: https://github.com/syscraft-mc/syscraft.dev
+  live: https://syscraft.tailz.dev
+  community: Syscraft Discord
+  communityUrl: https://discord.gg/Dx6SSkx
+  bullets:
+    - Nuxt 4 + Nuxt Content rebuild of the seven existing guides.
+    - Replaced Algolia with on-site content search.
+    - Community-owned site — production DNS still with Syscraft when they are ready.
+
+- slug: morpheus
+  name: Morpheus
+  role: author
+  featured: false
+  oneLiner: Browser JSON / YAML / CSV / XML transforms via sandboxed JavaScript.
+  github: https://github.com/Turbotailz/morpheus
+  live: https://morpheus.tailz.dev
+  bullets:
+    - Ad-hoc data munging without spinning up a Node script.
+    - Optional Gemini-powered expression generation.
+    - Hosted on this domain’s subdomain.
+
+- slug: athena
+  name: Athena API
+  role: author
+  featured: false
+  oneLiner: Public Overwatch Stadium data — heroes, items, powers — for community tools.
+  github: https://github.com/Turbotailz/athena-api
+  live: https://athena-api.pages.dev
+  bullets:
+    - Open data layer patched with the game.
+    - Used by community Stadium apps.
+    - Docs live next to the API.

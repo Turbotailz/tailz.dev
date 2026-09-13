@@ -1,0 +1,279 @@
+:root {
+  --bg: #0b120c;
+  --bg-2: #101a12;
+  --fg: #b8ffc8;
+  --fg-dim: #6fa87c;
+  --amber: #e8a838;
+  --line: #1e3a24;
+  --scan: rgba(10, 18, 12, 0.28);
+  --glow: rgba(184, 255, 200, 0.12);
+  --font: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font);
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+body {
+  background-image:
+    radial-gradient(1200px 500px at 50% -10%, var(--glow), transparent 55%);
+}
+
+a {
+  color: var(--amber);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+::selection {
+  background: var(--amber);
+  color: var(--bg);
+}
+
+.scanlines {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0 2px,
+    var(--scan) 2px 3px
+  );
+  opacity: 0.35;
+}
+
+.wrap {
+  width: min(72rem, calc(100% - 2.5rem));
+  margin: 0 auto;
+  padding: 1.25rem 0 3rem;
+}
+
+.bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.25rem;
+  align-items: baseline;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.prompt {
+  color: var(--fg-dim);
+}
+
+.prompt strong {
+  color: var(--fg);
+  font-weight: 600;
+}
+
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1rem;
+  font-size: 0.85rem;
+}
+
+.nav a {
+  color: var(--fg-dim);
+}
+
+.nav a.router-link-active,
+.nav a[aria-current="page"] {
+  color: var(--amber);
+  text-decoration: none;
+}
+
+.nav a:hover {
+  color: var(--fg);
+}
+
+.box {
+  border: 1px solid var(--line);
+  background: var(--bg-2);
+  padding: 1rem 1.1rem;
+}
+
+.box + .box {
+  margin-top: 1rem;
+}
+
+.box h2,
+.section-title {
+  margin: 0 0 0.75rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+}
+
+pre,
+.ascii {
+  font-family: var(--font);
+  margin: 0;
+  white-space: pre;
+  line-height: 1.15;
+  color: var(--fg);
+}
+
+.muted {
+  color: var(--fg-dim);
+}
+
+.amber {
+  color: var(--amber);
+}
+
+.row {
+  display: grid;
+  gap: 0.35rem 1.5rem;
+}
+
+@media (min-width: 720px) {
+  .row.ls {
+    grid-template-columns: 8rem 7rem 1fr;
+    align-items: baseline;
+  }
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.chip {
+  display: inline-block;
+  border: 1px solid var(--line);
+  color: var(--fg-dim);
+  padding: 0.15rem 0.5rem;
+  font-size: 0.8rem;
+}
+
+.chip:hover {
+  color: var(--amber);
+  text-decoration: none;
+}
+
+.cursor {
+  display: inline-block;
+  width: 0.6ch;
+  height: 1.1em;
+  background: var(--fg);
+  vertical-align: text-bottom;
+  animation: blink 1.1s step-end infinite;
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+.boot {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  background: var(--bg);
+  display: grid;
+  place-items: center;
+  padding: 2rem;
+}
+
+.boot inner,
+.boot-inner {
+  width: min(40rem, 100%);
+}
+
+.skip {
+  margin-top: 1.25rem;
+  color: var(--fg-dim);
+  font-size: 0.8rem;
+  background: none;
+  border: 0;
+  font-family: inherit;
+  cursor: pointer;
+  padding: 0;
+}
+
+.skip:hover {
+  color: var(--amber);
+}
+
+.wordmark {
+  display: grid;
+  gap: 1rem;
+}
+
+@media (min-width: 800px) {
+  .wordmark {
+    grid-template-columns: auto 1fr;
+    align-items: end;
+  }
+}
+
+.fox {
+  color: var(--amber);
+  font-size: 0.7rem;
+}
+
+.contrib {
+  overflow-x: auto;
+  font-size: 10px;
+  line-height: 1;
+  letter-spacing: 0.05em;
+  color: var(--fg);
+}
+
+.avatar {
+  width: 72px;
+  height: 72px;
+  image-rendering: pixelated;
+  filter: grayscale(1) contrast(1.35) brightness(1.05) sepia(0.35) hue-rotate(70deg);
+  border: 1px solid var(--line);
+}
+
+.stack {
+  display: grid;
+  gap: 1rem;
+}
+
+.footer {
+  margin-top: 2.5rem;
+  border-top: 1px solid var(--line);
+  padding-top: 0.75rem;
+  color: var(--fg-dim);
+  font-size: 0.8rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cursor {
+    animation: none;
+  }
+
+  .scanlines {
+    display: none;
+  }
+}

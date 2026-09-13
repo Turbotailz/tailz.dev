@@ -1,0 +1,34 @@
+handle: Turbotailz
+prompt: "turbotailz@tailz:~$"
+tagline: OSS · websites & interfaces · Sydney
+offer: I enjoy creating nice websites and interfaces for open source projects. Let’s chat.
+email: sam@goodger.au
+github: https://github.com/Turbotailz
+discordHandle: Turbotailz
+whoami: Turbotailz is Sam Goodger — a developer in Sydney who rebuilds and designs websites for open source communities.
+homes:
+  - label: sam.goodger.au
+    href: https://sam.goodger.au
+    note: human hub
+  - label: goodger.dev
+    href: https://goodger.dev
+    note: consultancy
+  - label: turbotailz.com
+    href: https://turbotailz.com
+    note: gaming
+communities:
+  - name: LuckPerms
+    href: https://discord.gg/luckperms
+    note: Discord / org
+  - name: Syscraft
+    href: https://discord.gg/Dx6SSkx
+    note: Discord wiki
+useChips:
+  - Nuxt
+  - n8n
+  - Home Assistant
+boot:
+  - booting tailz.dev …
+  - loading identity: Turbotailz
+  - mounting /projects /uses /github
+  - ready.
